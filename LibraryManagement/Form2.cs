@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +20,8 @@ namespace LibraryManagement
         {
             InitializeComponent();
         }
-
+      
+        
         private void issueBooksToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bissue ib = new bissue();
@@ -76,6 +78,31 @@ namespace LibraryManagement
         }
 
         private void studentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            //SqlConnection con = new SqlConnection();
+            //con.ConnectionString = "data source = HARI\\SQLEXPRESS; database=library1; integrated security =True ";
+            //SqlCommand cmd = new SqlCommand();
+            //cmd.Connection = con;
+
+            //cmd.CommandText = "Select bName , bQuan from NewBook ";
+            //SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            //DataSet ds = new DataSet();
+
+            //ad.Fill(ds);
+            //dataGridView1.DataSource = ds.Tables[0];
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

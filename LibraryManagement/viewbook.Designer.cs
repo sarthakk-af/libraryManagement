@@ -77,7 +77,7 @@
             this.label1.Font = new System.Drawing.Font("Comic Sans MS", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(540, 79);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(202, 48);
+            this.label1.Size = new System.Drawing.Size(195, 45);
             this.label1.TabIndex = 1;
             this.label1.Text = "View Books";
             // 
@@ -314,6 +314,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(1050, 330);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // viewbook
             // 
