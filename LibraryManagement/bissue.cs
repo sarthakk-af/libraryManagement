@@ -112,49 +112,77 @@ namespace LibraryManagement
 
         private void btni_Click(object sender, EventArgs e)
         {
-            if(txtname.Text!="")
+            if (txtname.Text != "")
             {
-                if(txtbn.SelectedIndex != -1 && count <= 2)
+                if (txtbn.SelectedIndex != -1 && count <= 2)
                 {
                     String enroll = sarchno.Text;
                     String sname = txtname.Text;
                     String sdep = txtdep.Text;
-                    String ssem = txtem.Text;
+                    String ssem = txtsem.Text;
                     Int64 scon = Int64.Parse(txtcon.Text);
                     String email = txtem.Text;
                     String bkn = txtbn.Text;
                     String sdate = txtd.Text;
 
+                    DateTime issueDate = DateTime.Parse(sdate);
+                    DateTime returnDate = issueDate.AddDays(3);
 
-
-                    String edi = sarchno.Text;
                     SqlConnection con = new SqlConnection();
                     con.ConnectionString = "data source = HARI\\SQLEXPRESS ; database = library1;integrated security = true";
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = con;
+
                     con.Open();
-                    cmd.CommandText = "insert into IRBook (std_enroll,std_name,std_dep,std_sem,std_contact,std_email,book_name,book_issue_date) values ('"+enroll+"','"+sname+ "','"+sdep+ "','"+ssem+ "',"+scon+ ",'"+email+ "','"+bkn+ "','"+sdate+"')";
+
+                    // 1. Insert into IRBook table
+                    cmd.CommandText = "insert into IRBook (std_enroll, std_name, std_dep, std_sem, std_contact, std_email, book_name, book_issue_date) " +
+                                      "values (@enroll, @sname, @sdep, @ssem, @scon, @email, @bkn, @sdate)";
+                    cmd.Parameters.AddWithValue("@enroll", enroll);
+                    cmd.Parameters.AddWithValue("@sname", sname);
+                    cmd.Parameters.AddWithValue("@sdep", sdep);
+                    cmd.Parameters.AddWithValue("@ssem", ssem);
+                    cmd.Parameters.AddWithValue("@scon", scon);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@bkn", bkn);
+                    cmd.Parameters.AddWithValue("@sdate", sdate);
                     cmd.ExecuteNonQuery();
+
+                    // 2. Decrease quantity from NewBook
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = "update NewBook set bQuan = bQuan - 1 where bName = @bookName and bQuan > 0";
+                    cmd.Parameters.AddWithValue("@bookName", bkn);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected == 0)
+                    {
+                        MessageBox.Show("Book issued, but quantity could not be updated. Book might be out of stock.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
                     con.Close();
+
+                    // Clear fields
                     txtname.Clear();
                     txtdep.Clear();
                     txtsem.Clear();
                     txtcon.Clear();
                     txtem.Clear();
+                    sarchno.Clear();
+                    txtbn.SelectedIndex = -1;
 
-                    MessageBox.Show("Book Issued.","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    // Show message
+                    MessageBox.Show($"Book Issued Successfully!\nReturn Due Date: {returnDate.ToShortDateString()}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Select Book OR Maximum number of book has been ISSUED.", "No Book Selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    MessageBox.Show("Select Book OR Maximum number of books has been ISSUED.", "No Book Selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
                 MessageBox.Show("Enter valid enrollment number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
+
 
         }
 
@@ -182,6 +210,11 @@ namespace LibraryManagement
         }
 
         private void txtcon_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtd_ValueChanged(object sender, EventArgs e)
         {
 
         }

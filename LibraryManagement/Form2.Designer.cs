@@ -33,7 +33,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newBooksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportBooksDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.studentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAStudentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewStudentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +64,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(250, 879);
+            this.menuStrip1.Size = new System.Drawing.Size(250, 1018);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -70,7 +72,9 @@
             // 
             this.booksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addNewBookToolStripMenuItem,
-            this.newBooksToolStripMenuItem});
+            this.importFileToolStripMenuItem,
+            this.newBooksToolStripMenuItem,
+            this.exportBooksDataToolStripMenuItem});
             this.booksToolStripMenuItem.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.booksToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("booksToolStripMenuItem.Image")));
             this.booksToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -85,18 +89,32 @@
             this.addNewBookToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("addNewBookToolStripMenuItem.Image")));
             this.addNewBookToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.addNewBookToolStripMenuItem.Name = "addNewBookToolStripMenuItem";
-            this.addNewBookToolStripMenuItem.Size = new System.Drawing.Size(269, 56);
+            this.addNewBookToolStripMenuItem.Size = new System.Drawing.Size(303, 56);
             this.addNewBookToolStripMenuItem.Text = "Add new Book";
             this.addNewBookToolStripMenuItem.Click += new System.EventHandler(this.addNewBookToolStripMenuItem_Click);
+            // 
+            // importFileToolStripMenuItem
+            // 
+            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
+            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(303, 56);
+            this.importFileToolStripMenuItem.Text = "Import File";
+            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
             // 
             // newBooksToolStripMenuItem
             // 
             this.newBooksToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newBooksToolStripMenuItem.Image")));
             this.newBooksToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.newBooksToolStripMenuItem.Name = "newBooksToolStripMenuItem";
-            this.newBooksToolStripMenuItem.Size = new System.Drawing.Size(269, 56);
+            this.newBooksToolStripMenuItem.Size = new System.Drawing.Size(303, 56);
             this.newBooksToolStripMenuItem.Text = "New Books";
             this.newBooksToolStripMenuItem.Click += new System.EventHandler(this.newBooksToolStripMenuItem_Click);
+            // 
+            // exportBooksDataToolStripMenuItem
+            // 
+            this.exportBooksDataToolStripMenuItem.Name = "exportBooksDataToolStripMenuItem";
+            this.exportBooksDataToolStripMenuItem.Size = new System.Drawing.Size(303, 56);
+            this.exportBooksDataToolStripMenuItem.Text = "Export Books Data";
+            this.exportBooksDataToolStripMenuItem.Click += new System.EventHandler(this.exportBooksDataToolStripMenuItem_Click);
             // 
             // studentToolStripMenuItem
             // 
@@ -179,13 +197,14 @@
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(29, 36);
+            this.label1.Location = new System.Drawing.Point(31, 95);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 49);
             this.label1.TabIndex = 2;
@@ -194,7 +213,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(616, 168);
+            this.pictureBox1.Location = new System.Drawing.Point(542, 183);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(659, 562);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -208,7 +227,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InfoText;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1581, 879);
+            this.ClientSize = new System.Drawing.Size(1440, 1018);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
@@ -243,5 +262,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem importFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportBooksDataToolStripMenuItem;
     }
 }

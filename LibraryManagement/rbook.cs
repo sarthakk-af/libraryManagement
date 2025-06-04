@@ -19,10 +19,19 @@ namespace LibraryManagement
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (txtsarchol.Text == "")
-            {
-                dataGridView1.DataSource = null;
-            }
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "data source = HARI\\SQLEXPRESS;database = library1;integrated security=True";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "SELECT * FROM IRBook WHERE std_name LIKE @stdName AND book_return_date IS NULL";
+            cmd.Parameters.AddWithValue("@stdName", "%" + txtsarchol.Text + "%");
+
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            ad.Fill(ds);
+
+            dataGridView1.DataSource = ds.Tables[0]; // even if 0 rows, just clear view
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -31,29 +40,55 @@ namespace LibraryManagement
         private void btnsarch_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection();
-            con.ConnectionString= "data source = HARI\\SQLEXPRESS;database = library1;integrated security=True";          
+            con.ConnectionString = "data source = HARI\\SQLEXPRESS;database = library1;integrated security=True";
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "select * from IRBook where std_enroll = '"+txtsarchol.Text+"' and book_return_date is NULL";
+            cmd.CommandText = "SELECT * FROM IRBook WHERE std_name LIKE @stdName AND book_return_date IS NULL";
+            cmd.Parameters.AddWithValue("@stdName", "%" + txtsarchol.Text + "%");
+            cmd.Parameters.AddWithValue("@stdName", txtsarchol.Text); // This helps prevent SQL Injection
+
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             ad.Fill(ds);
 
-            if (ds.Tables[0].Rows.Count != 0 )
+            if (ds.Tables[0].Rows.Count != 0)
             {
                 dataGridView1.DataSource = ds.Tables[0];
             }
             else
             {
-                MessageBox.Show("Invalid Enrollment No. OR No Book Issued","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Invalid Student Name OR No Book Issued", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void rbook_Load(object sender, EventArgs e)
         {
             panel3.Visible = false;
             txtsarchol.Clear();
+            LoadUserData();
+
         }
+
+        private void LoadUserData()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("data source=HARI\\SQLEXPRESS; database=library1; integrated security=True"))
+                {
+                    SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM IRBook", con);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    dataGridView1.DataSource = dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         String bname;
         String bdate;
         Int64 rowid;
@@ -89,6 +124,11 @@ namespace LibraryManagement
         private void cancel_Click(object sender, EventArgs e)
         {
             panel3.Visible = false;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

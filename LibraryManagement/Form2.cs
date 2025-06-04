@@ -34,7 +34,7 @@ namespace LibraryManagement
             //con.Open();
             //string query = "Insert into newb values";
 
-            adbook abs = new adbook();
+            AddBook abs = new AddBook();
             abs.Show();
         }
 
@@ -48,7 +48,7 @@ namespace LibraryManagement
 
         private void newBooksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            viewbook vb = new viewbook();   
+            ViewBook vb = new ViewBook();   
             vb.Show();
         }
 
@@ -105,6 +105,33 @@ namespace LibraryManagement
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void addBooksDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void exportBooksDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            exportbook eb = new exportbook();
+            eb.Show();
+        }
+
+        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            adddata ad = new adddata();
+            ad.Show();
         }
     }
 }

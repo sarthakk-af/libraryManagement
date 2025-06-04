@@ -150,6 +150,7 @@
             this.txtd.Name = "txtd";
             this.txtd.Size = new System.Drawing.Size(200, 22);
             this.txtd.TabIndex = 14;
+            this.txtd.ValueChanged += new System.EventHandler(this.txtd_ValueChanged);
             // 
             // txtem
             // 
@@ -359,7 +360,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "bissue";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "bissue";
+            this.Text = "Book issue";
             this.Load += new System.EventHandler(this.bissue_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
